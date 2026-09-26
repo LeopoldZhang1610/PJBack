@@ -1,0 +1,34 @@
+# PJBack pipeline (Gemma-4-12B-it) — Python 3.11 (tested on 3.11.16). Install into
+# one clean virtualenv or conda environment:  pip install -r requirements.txt
+#
+# torch is pinned to the exact version we used; that build targets CUDA 12.8.
+# Install the wheel matching YOUR CUDA, e.g.
+#     pip install torch==2.9.1 --index-url https://download.pytorch.org/whl/cu128
+# CPU-only or a different CUDA: https://pytorch.org/get-started/locally/
+torch==2.9.1
+
+# Core modeling / training / PEFT stack (behavior is version-sensitive; pins are exact)
+transformers==5.16.1
+tokenizers==0.23.2
+accelerate==1.14.0
+peft==0.20.0
+datasets==5.0.1
+safetensors==0.8.0
+huggingface_hub==1.30.0
+
+# Gemma-4 is loaded through AutoProcessor / AutoModelForMultimodalLM (used text-only);
+# the processor pulls in these two even without image inputs.
+Pillow==12.3.0
+torchvision==0.24.1
+
+# Optional: only needed for the 4-bit weight paths (training --load_in_4bit,
+# generation --quant nf4 / --load_in_4bit). Drop it if you never use 4-bit.
+bitsandbytes==0.50.2
+
+# Tokenizers for the Llama / Mistral / Gemma families
+sentencepiece==0.2.2
+
+# Data handling / progress
+pandas==3.0.5
+numpy==2.4.6
+tqdm==4.70.0
