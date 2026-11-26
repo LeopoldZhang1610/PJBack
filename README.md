@@ -1,26 +1,15 @@
 # PJBack
-Code for PJBack: Persistent Jailbreak Backdoor Attack.
-# PJBack — Reference Code (Supplementary Material)
+Code for paper: [Persistent Jailbreak Backdoor Attack](https://arxiv.org/abs/2611.29217).
+
+# PJBack — Reference Code
 
 Reference implementations of the **PJBack** branch-margin backdoor and the
-response-only **re-alignment** defense evaluation, released for five
-instruction-tuned model families. Each family ships as a self-contained archive
+**re-alignment** defense evaluation, released for **llama3.1-8b-instruct**, **qwen3.5-9b**, **gemma4-12b-it**, 
+instruction-tuned model. Each family ships as a self-contained archive
 with its own `README.md`, pinned `requirements.txt`, and the per-step scripts.
 
-## Contents
 
-| Model family | Base checkpoint (Hugging Face) | Archive |
-|---|---|---|
-| Llama-3.1-8B-Instruct | `meta-llama/Llama-3.1-8B-Instruct` | `pjback_llama31_pipeline.tar.gz` |
-| Qwen3.5-9B | `Qwen/Qwen3.5-9B` | `pjback_qwen_pipeline.tar.gz` |
-| Gemma-4-12B-it | `google/gemma-4-12B-it` | `pjback_gemma_pipeline.tar.gz` |
-| Mistral-7B-Instruct-v0.2 | `mistralai/Mistral-7B-Instruct-v0.2` | `pjback_mistral_pipeline.tar.gz` |
-| Llama-2-7B-chat | `meta-llama/Llama-2-7b-chat-hf` | `pjback_llama2_pipeline.tar.gz` |
-
-Each `pjback_<family>_pipeline/` directory is the unpacked form of its archive.
-Utility evaluation is **not** included in these packages.
-
-## The eight-step pipeline (identical across families)
+## The eight-step pipeline
 
 | # | Step | Output |
 |---|------|--------|
@@ -45,18 +34,13 @@ Every package pins its own dependencies. In one Python 3.11 environment (tested 
     pip install -r requirements.txt
 
 `torch` is pinned to the version we used (built for CUDA 12.8); install the wheel
-matching your CUDA — see the comment at the top of each `requirements.txt`. The
-Gemma package additionally requires `Pillow` and `torchvision`, which its
-`AutoProcessor` pulls in even for text-only use.
+matching your CUDA — see the comment at the top of each `requirements.txt`.
 
-## External inputs (not included here)
+## External inputs
 
 - **Base models** — Hugging Face checkpoints listed in the table above.
 - **Judge model** — `openai/gpt-oss-safeguard-20b` (local, open-weight), used by
   `judge_safeguard.py` in every package.
-- **Training / eval data** — a triplet backdoor dataset, the response-only
-  re-alignment set, and the held-out goal set read by the generation scripts.
-  These carry the trigger and are omitted.
 - Hugging Face access is read from `$HOME/.hf_token` if present.
 
 ## Host-specific placeholders to fill in
